@@ -2,8 +2,6 @@
 
 ## A repository to practice microservices architecture.
 
-* Technologies
-
 The projects in this repository use the following technologies:
 
 * Node.js: A JavaScript runtime that allows you to build scalable and performant applications.
