@@ -4,6 +4,29 @@
 var grpc = require('@grpc/grpc-js');
 var sum_pb = require('./sum_pb.js');
 var primes_pb = require('./primes_pb.js');
+var average_pb = require('./average_pb.js');
+
+function serialize_calculator_AverageRequest(arg) {
+  if (!(arg instanceof average_pb.AverageRequest)) {
+    throw new Error('Expected argument of type calculator.AverageRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_calculator_AverageRequest(buffer_arg) {
+  return average_pb.AverageRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_calculator_AverageResponse(arg) {
+  if (!(arg instanceof average_pb.AverageResponse)) {
+    throw new Error('Expected argument of type calculator.AverageResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_calculator_AverageResponse(buffer_arg) {
+  return average_pb.AverageResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
 
 function serialize_calculator_PrimeRequest(arg) {
   if (!(arg instanceof primes_pb.PrimeRequest)) {
@@ -75,6 +98,18 @@ primes: {
     responseDeserialize: deserialize_calculator_PrimeResponse,
   },
   // Server streaming
+average: {
+    path: '/calculator.CalculatorService/Average',
+    requestStream: true,
+    responseStream: false,
+    requestType: average_pb.AverageRequest,
+    responseType: average_pb.AverageResponse,
+    requestSerialize: serialize_calculator_AverageRequest,
+    requestDeserialize: deserialize_calculator_AverageRequest,
+    responseSerialize: serialize_calculator_AverageResponse,
+    responseDeserialize: deserialize_calculator_AverageResponse,
+  },
+  // Client Streaming
 };
 
 exports.CalculatorServiceClient = grpc.makeGenericClientConstructor(CalculatorServiceService);
