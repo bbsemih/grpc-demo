@@ -18,3 +18,19 @@ exports.greetManyTimes = (call, _) => {
     }
     call.end();
 };
+
+exports.longGreet = (call, callback) => {
+    console.log("longGreet was invoked!");
+    let greet = "";
+
+    call.on("data", (req) => {
+        greet += `Hello ${req.getFirstName()}\n`
+    });
+
+    call.on("end", () => {
+        const res = new pb.GreetResponse()
+            .setResult(greet);
+
+        callback(null, res);
+    });
+};
