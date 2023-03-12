@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package language;
+
+
+message LangRequest {
+    string language = 1;
+}
+
+message LangResponse {
+    string info = 1;
+}
+
+service LanguageService {
+    rpc Lang(LangRequest) returns(LangResponse);//Unary
+}

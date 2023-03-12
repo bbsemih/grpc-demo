@@ -5,11 +5,9 @@ const { CalculatorServiceService } = require("../proto/calculator_grpc_pb");
 const addr = "localhost:50051";
 
 function cleanup(server) {
-    if (server)  {
-        console.log("Cleanup...");
-        if (server) {
-            server.forceShutdown();
-        }
+    console.log("Cleanup...");
+    if (server) {
+        server.forceShutdown();
     }
 };
 

@@ -13,7 +13,7 @@ function doGreet(client) {
         }
         console.log(`Greet: ${res.getResult()}`);
     })
-}
+};
 
 //Server Streaming
 
