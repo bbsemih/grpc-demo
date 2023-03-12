@@ -2,15 +2,14 @@ syntax = "proto3";
 
 package language;
 
-
-message LangRequest {
+message LanguageRequest {
     string language = 1;
 }
 
-message LangResponse {
+message LanguageResponse {
     string info = 1;
 }
 
 service LanguageService {
-    rpc Lang(LangRequest) returns(LangResponse);//Unary
+    rpc Language(LanguageRequest) returns(LanguageResponse);//Unary
 }
