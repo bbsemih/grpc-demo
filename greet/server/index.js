@@ -1,4 +1,5 @@
 const grpc = require("@grpc/grpc-js");
+const fs = require("fs");
 const serviceImpl = require("./service_impl");
 const { GreetServiceService } = require("../proto/greet_grpc_pb.js");
 
@@ -14,7 +15,20 @@ function cleanup(server) {
 function main() {
     //1
     const server = new grpc.Server();
-    const creds = grpc.ServerCredentials.createInsecure();
+    const tls = true;
+    let creds;
+    if (tls) {
+        const rootCert = fs.readFileSync("./ssl/ca.crt");
+        const certChain = fs.readFileSync("./ssl/server.crt");
+        const privateKey = fs.readFileSync("./ssl/server.pem");
+
+        creds = grpc.ServerCredentials.createSsl(rootCert, [{
+            cert_chain: certChain,
+            private_key: privateKey,
+        }]);
+    } else {
+        creds = grpc.ServerCredentials.createInsecure();
+    }
 
     //3 - When you press CTRL+C
     process.on("SIGINT", () => {

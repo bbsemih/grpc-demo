@@ -1,6 +1,7 @@
 const grpc = require("@grpc/grpc-js")
 const { GreetServiceClient } = require("../proto/greet_grpc_pb.js");
 const { GreetRequest } = require("../proto/greet_pb.js");
+const fs = require("fs");
 
 //Unary
 function doGreet(client) {
@@ -77,14 +78,21 @@ function doGreetWithDeadline(client, ms) {
 
 //To use a gRPC client to communicate with a gRPC server. 
 function main() {
-    const creds = grpc.ChannelCredentials.createInsecure();
+    const tls = true;
+    let creds;
+    if (tls) {
+        const rootCert = fs.readFileSync("./ssl/ca.crt");
+        creds = grpc.ChannelCredentials.createSsl(rootCert);
+    } else {
+        creds = grpc.ChannelCredentials.createInsecure();
+    }
     const client = new GreetServiceClient("localhost:50051", creds);
 
-    //doGreet(client)
-    //doGreetManyTimes(client)
-    //doLongGreet(client)
-    //doGreetEveryone(client);
-    doGreetWithDeadline(client, 1000);
+    doGreet(client)
+        //doGreetManyTimes(client)
+        //doLongGreet(client)
+        //doGreetEveryone(client);
+        //doGreetWithDeadline(client, 1000);
     client.close();
 };
 

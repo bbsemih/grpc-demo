@@ -10,7 +10,8 @@
         "calc:server": "node calculator/server/index.js",
         "calc:client": "node calculator/client/index.js",
         "weather:server": "node weather/server/index.js",
-        "weather:client": "node weather/client/index.js"
+        "weather:client": "node weather/client/index.js",
+        "ssl:gen": "cd ssl && ../scripts/ssl.sh && cd .."
     },
     "keywords": [],
     "author": "Semih Berkay Öztürk",
