@@ -1,8 +1,2 @@
 node_modules
 .DS_Store
-## SSL
-ssl
-*.crt
-*.key
-*.csr
-*.pem
