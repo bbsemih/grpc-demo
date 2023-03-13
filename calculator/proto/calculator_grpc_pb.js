@@ -6,6 +6,7 @@ var sum_pb = require('./sum_pb.js');
 var primes_pb = require('./primes_pb.js');
 var average_pb = require('./average_pb.js');
 var max_pb = require('./max_pb.js');
+var sqrt_pb = require('./sqrt_pb.js');
 
 function serialize_calculator_AverageRequest(arg) {
   if (!(arg instanceof average_pb.AverageRequest)) {
@@ -71,6 +72,28 @@ function serialize_calculator_PrimeResponse(arg) {
 
 function deserialize_calculator_PrimeResponse(buffer_arg) {
   return primes_pb.PrimeResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_calculator_SqrtRequest(arg) {
+  if (!(arg instanceof sqrt_pb.SqrtRequest)) {
+    throw new Error('Expected argument of type calculator.SqrtRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_calculator_SqrtRequest(buffer_arg) {
+  return sqrt_pb.SqrtRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_calculator_SqrtResponse(arg) {
+  if (!(arg instanceof sqrt_pb.SqrtResponse)) {
+    throw new Error('Expected argument of type calculator.SqrtResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_calculator_SqrtResponse(buffer_arg) {
+  return sqrt_pb.SqrtResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_calculator_SumRequest(arg) {
@@ -145,6 +168,18 @@ max: {
     responseDeserialize: deserialize_calculator_MaxResponse,
   },
   // Bi-directional Streaming
+sqrt: {
+    path: '/calculator.CalculatorService/Sqrt',
+    requestStream: false,
+    responseStream: false,
+    requestType: sqrt_pb.SqrtRequest,
+    responseType: sqrt_pb.SqrtResponse,
+    requestSerialize: serialize_calculator_SqrtRequest,
+    requestDeserialize: deserialize_calculator_SqrtRequest,
+    responseSerialize: serialize_calculator_SqrtResponse,
+    responseDeserialize: deserialize_calculator_SqrtResponse,
+  },
+  // Created this to test error handling
 };
 
 exports.CalculatorServiceClient = grpc.makeGenericClientConstructor(CalculatorServiceService);

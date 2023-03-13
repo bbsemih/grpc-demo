@@ -29,3 +29,5 @@ var average_pb = require('./average_pb.js');
 goog.object.extend(proto, average_pb);
 var max_pb = require('./max_pb.js');
 goog.object.extend(proto, max_pb);
+var sqrt_pb = require('./sqrt_pb.js');
+goog.object.extend(proto, sqrt_pb);
