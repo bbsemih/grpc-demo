@@ -4,13 +4,13 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "pb:gen": "./scripts/gen.sh greet calculator language",
+        "pb:gen": "./scripts/gen.sh greet calculator weather",
         "greet:server": "node greet/server/index.js",
         "greet:client": "node greet/client/index.js",
         "calc:server": "node calculator/server/index.js",
         "calc:client": "node calculator/client/index.js",
-        "lang:server": "node language/server/index.js",
-        "lang:client": "node language/client/index.js"
+        "weather:server": "node weather/server/index.js",
+        "weather:client": "node weather/client/index.js"
     },
     "keywords": [],
     "author": "Semih Berkay Öztürk",

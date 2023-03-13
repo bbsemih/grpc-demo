@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package weather;
+
+message WeatherRequest {
+    string city = 1;
+}
+
+message WeatherResponse {
+    string result = 1;
+}
+
+service WeatherService {
+    rpc Weather(WeatherRequest) returns(WeatherResponse);
+    rpc WeatherManyTimes(WeatherRequest) returns(stream WeatherResponse);
+}

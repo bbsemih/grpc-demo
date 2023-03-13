@@ -9,7 +9,7 @@ function cleanup(server) {
     if (server) {
         server.forceShutdown();
     }
-}
+};
 
 function main() {
     //1

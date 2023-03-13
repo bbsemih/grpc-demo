@@ -1,11 +1,11 @@
 const grpc = require("@grpc/grpc-js");
-const { LanguageServiceService } = require("../proto/language_grpc_pb");
+const { WeatherServiceService } = require("../proto/weather_grpc_pb");
 const serviceImpl = require("./service_impl");
 
 const addr = "localhost:50051";
 
 function cleanup(server) {
-    console.log("Cleanup....");
+    console.log("Cleanup...");
     if (server) {
         server.forceShutdown();
     }
@@ -18,8 +18,10 @@ function main() {
     process.on("SIGINT", () => {
         console.log("Caught interrupt signal!");
         cleanup(server);
-    });
-    server.addService(LanguageServiceService, serviceImpl);
+    })
+
+    server.addService(WeatherServiceService, serviceImpl);
+
     server.bindAsync(addr, creds, (err, _) => {
         if (err) {
             return cleanup(server);
