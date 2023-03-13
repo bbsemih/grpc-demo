@@ -14,4 +14,5 @@ service GreetService {
     rpc Greet(GreetRequest) returns(GreetResponse);//Unary
     rpc GreetManyTimes (GreetRequest) returns (stream GreetResponse);//Server Streaming
     rpc LongGreet(stream GreetRequest) returns (GreetResponse);//Client Streaming
+    rpc GreetEveryone(stream GreetRequest) returns (stream GreetResponse);//Bi-Directional Streaming
 }
