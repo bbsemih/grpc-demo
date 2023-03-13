@@ -64,6 +64,18 @@ longGreet: {
     responseDeserialize: deserialize_greet_GreetResponse,
   },
   // Client Streaming
+greetEveryone: {
+    path: '/greet.GreetService/GreetEveryone',
+    requestStream: true,
+    responseStream: true,
+    requestType: greet_pb.GreetRequest,
+    responseType: greet_pb.GreetResponse,
+    requestSerialize: serialize_greet_GreetRequest,
+    requestDeserialize: deserialize_greet_GreetRequest,
+    responseSerialize: serialize_greet_GreetResponse,
+    responseDeserialize: deserialize_greet_GreetResponse,
+  },
+  // Bi-Directional Streaming
 };
 
 exports.GreetServiceClient = grpc.makeGenericClientConstructor(GreetServiceService);

@@ -44,7 +44,22 @@ function doLongGreet(client) {
         return new GreetRequest().setFirstName(name);
     }).forEach((req) => call.write(req))
     call.end();
-}
+};
+
+//Bi-directional Streaming
+function doGreetEveryone(client) {
+    console.log("doGreetEveryone was invoked!");
+    const names = ["Semih", "Linus", "Gilfoyle"];
+    const call = client.greetEveryone();
+
+    call.on("data", (res) => {
+        console.log(`Greet Everyone: ${res.getResult()}`);
+    })
+    names.map((name) => {
+        return new GreetRequest().setFirstName(name);
+    }).forEach((req) => call.write(req))
+    call.end();
+};
 
 //To use a gRPC client to communicate with a gRPC server. 
 function main() {
@@ -53,7 +68,8 @@ function main() {
 
     //doGreet(client)
     //doGreetManyTimes(client)
-    doLongGreet(client)
+    //doLongGreet(client)
+    doGreetEveryone(client);
     client.close();
 }
 
