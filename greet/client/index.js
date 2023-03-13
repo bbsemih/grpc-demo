@@ -61,6 +61,20 @@ function doGreetEveryone(client) {
     call.end();
 };
 
+function doGreetWithDeadline(client, ms) {
+    console.log(`doGreetWithDeadline was invoked!`);
+    const req = new GreetRequest()
+        .setFirstName("Semih");
+    client.greetWithDeadline(req, {
+        deadline: new Date(Date.now() + ms)
+    }, (err, res) => {
+        if (err) {
+            return console.log(err);
+        }
+        console.log(`GreetWithDeadline: ${res.getResult()}`);
+    })
+};
+
 //To use a gRPC client to communicate with a gRPC server. 
 function main() {
     const creds = grpc.ChannelCredentials.createInsecure();
@@ -69,8 +83,9 @@ function main() {
     //doGreet(client)
     //doGreetManyTimes(client)
     //doLongGreet(client)
-    doGreetEveryone(client);
+    //doGreetEveryone(client);
+    doGreetWithDeadline(client, 1000);
     client.close();
-}
+};
 
 main();

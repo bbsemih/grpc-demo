@@ -4,6 +4,7 @@ const { SumRequest } = require("../proto/sum_pb");
 const { PrimeRequest } = require("../proto/primes_pb");
 const { AverageRequest } = require("../proto/average_pb");
 const { MaxRequest } = require("../proto/max_pb");
+const { SqrtRequest } = require("../proto/sqrt_pb");
 
 function doSum(client) {
     console.log("doSum was invoked!");
@@ -62,6 +63,18 @@ function doMax(client) {
     call.end();
 }
 
+function doSqrt(client, n) {
+    console.log("doSqrt was invoked!");
+    const req = new SqrtRequest()
+        .setNumber(n);
+    client.sqrt(req, (err, res) => {
+        if (err) {
+            console.log(err);
+        }
+        console.log(`Sqrt: ${res.getResult()}`);
+    })
+}
+
 //To use a gRPC client to communicate with a gRPC server. 
 function main() {
     const creds = grpc.ChannelCredentials.createInsecure();
@@ -70,8 +83,9 @@ function main() {
     //doSum(client)
     //doPrimes(client)
     //doAverage(client)
-    doMax(client);
+    //doMax(client);
+    doSqrt(client, -1)
     client.close();
-}
+};
 
 main();
