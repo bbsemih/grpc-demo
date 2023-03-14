@@ -39,7 +39,8 @@ var WeatherServiceService = exports.WeatherServiceService = {
     responseSerialize: serialize_weather_WeatherResponse,
     responseDeserialize: deserialize_weather_WeatherResponse,
   },
-  weatherManyTimes: {
+  // Unary
+weatherManyTimes: {
     path: '/weather.WeatherService/WeatherManyTimes',
     requestStream: false,
     responseStream: true,
@@ -50,6 +51,31 @@ var WeatherServiceService = exports.WeatherServiceService = {
     responseSerialize: serialize_weather_WeatherResponse,
     responseDeserialize: deserialize_weather_WeatherResponse,
   },
+  // Server-streaming
+weatherExact: {
+    path: '/weather.WeatherService/WeatherExact',
+    requestStream: true,
+    responseStream: false,
+    requestType: weather_pb.WeatherRequest,
+    responseType: weather_pb.WeatherResponse,
+    requestSerialize: serialize_weather_WeatherRequest,
+    requestDeserialize: deserialize_weather_WeatherRequest,
+    responseSerialize: serialize_weather_WeatherResponse,
+    responseDeserialize: deserialize_weather_WeatherResponse,
+  },
+  // Client streaming
+weatherMutual: {
+    path: '/weather.WeatherService/WeatherMutual',
+    requestStream: true,
+    responseStream: true,
+    requestType: weather_pb.WeatherRequest,
+    responseType: weather_pb.WeatherResponse,
+    requestSerialize: serialize_weather_WeatherRequest,
+    requestDeserialize: deserialize_weather_WeatherRequest,
+    responseSerialize: serialize_weather_WeatherResponse,
+    responseDeserialize: deserialize_weather_WeatherResponse,
+  },
+  // Bi-directional streaming
 };
 
 exports.WeatherServiceClient = grpc.makeGenericClientConstructor(WeatherServiceService);

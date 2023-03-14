@@ -24,12 +24,29 @@ function doWeatherManyTimes(client) {
     });
 };
 
+function doWeatherExact(client) {
+    console.log("doWeatherExact was invoked!");
+    const infos = ["Istanbul", "Turkey", "Rainy"];
+
+    const call = client.weatherExact((err, res) => {
+        if (err) {
+            return console.log(err);
+        }
+        console.log(`Exact Weather: ${res.getResult()}`);
+    })
+    infos.map((info) => {
+        return new WeatherRequest().setCity(info);
+    }).forEach((req) => call.write(req));
+    call.end();
+};
+
 function main() {
     const creds = grpc.ChannelCredentials.createInsecure();
     const client = new WeatherServiceClient("localhost:50051", creds);
 
     //doWeather(client);
-    doWeatherManyTimes(client)
+    //doWeatherManyTimes(client)
+    doWeatherExact(client);
     client.close();
 }
 main();

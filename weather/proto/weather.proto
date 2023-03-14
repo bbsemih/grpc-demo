@@ -11,6 +11,8 @@ message WeatherResponse {
 }
 
 service WeatherService {
-    rpc Weather(WeatherRequest) returns(WeatherResponse);
-    rpc WeatherManyTimes(WeatherRequest) returns(stream WeatherResponse);
+    rpc Weather(WeatherRequest) returns(WeatherResponse);//Unary
+    rpc WeatherManyTimes(WeatherRequest) returns(stream WeatherResponse);//Server-streaming
+    rpc WeatherExact(stream WeatherRequest) returns(WeatherResponse);//Client streaming
+    rpc WeatherMutual(stream WeatherRequest) returns(stream WeatherResponse);//Bi-directional streaming
 }

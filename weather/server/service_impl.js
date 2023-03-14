@@ -17,3 +17,18 @@ exports.weatherManyTimes = (call, _) => {
     }
     call.end();
 };
+
+exports.weatherExact = (call, callback) => {
+    console.log("weatherExact was invoked!");
+    let fullInfo = "";
+    call.on("data", (req) => {
+        fullInfo += `Full information: ${req.getCity()}`
+    });
+
+    call.on("end", () => {
+        const res = new pb.WeatherResponse()
+            .setResult(fullInfo);
+
+        callback(null, res);
+    });
+}
