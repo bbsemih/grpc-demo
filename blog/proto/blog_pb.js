@@ -101,8 +101,8 @@ proto.blog.Blog.toObject = function(includeInstance, msg) {
   var f, obj = {
     id: jspb.Message.getFieldWithDefault(msg, 1, ""),
     authorId: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    title: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    content: jspb.Message.getFieldWithDefault(msg, 4, "")
+    content: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    title: jspb.Message.getFieldWithDefault(msg, 4, "")
   };
 
   if (includeInstance) {
@@ -149,11 +149,11 @@ proto.blog.Blog.deserializeBinaryFromReader = function(msg, reader) {
       break;
     case 3:
       var value = /** @type {string} */ (reader.readString());
-      msg.setTitle(value);
+      msg.setContent(value);
       break;
     case 4:
       var value = /** @type {string} */ (reader.readString());
-      msg.setContent(value);
+      msg.setTitle(value);
       break;
     default:
       reader.skipField();
@@ -198,14 +198,14 @@ proto.blog.Blog.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getTitle();
+  f = message.getContent();
   if (f.length > 0) {
     writer.writeString(
       3,
       f
     );
   }
-  f = message.getContent();
+  f = message.getTitle();
   if (f.length > 0) {
     writer.writeString(
       4,
@@ -252,10 +252,10 @@ proto.blog.Blog.prototype.setAuthorId = function(value) {
 
 
 /**
- * optional string title = 3;
+ * optional string content = 3;
  * @return {string}
  */
-proto.blog.Blog.prototype.getTitle = function() {
+proto.blog.Blog.prototype.getContent = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
@@ -264,16 +264,16 @@ proto.blog.Blog.prototype.getTitle = function() {
  * @param {string} value
  * @return {!proto.blog.Blog} returns this
  */
-proto.blog.Blog.prototype.setTitle = function(value) {
+proto.blog.Blog.prototype.setContent = function(value) {
   return jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
 /**
- * optional string content = 4;
+ * optional string title = 4;
  * @return {string}
  */
-proto.blog.Blog.prototype.getContent = function() {
+proto.blog.Blog.prototype.getTitle = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
 };
 
@@ -282,7 +282,7 @@ proto.blog.Blog.prototype.getContent = function() {
  * @param {string} value
  * @return {!proto.blog.Blog} returns this
  */
-proto.blog.Blog.prototype.setContent = function(value) {
+proto.blog.Blog.prototype.setTitle = function(value) {
   return jspb.Message.setProto3StringField(this, 4, value);
 };
 

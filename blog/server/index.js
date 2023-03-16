@@ -42,6 +42,7 @@ async function main() {
         cleanup(server);
     })
     await mongoClient.connect();
+
     const database = mongoClient.db("blogdb");
     collection = database.collection("blog");
 
