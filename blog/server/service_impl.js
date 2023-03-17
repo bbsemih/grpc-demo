@@ -1,4 +1,5 @@
 const grpc = require("@grpc/grpc-js");
+const { Empty } = require("google-protobuf/google/protobuf/empty_pb");
 const { Blog, BlogId } = require("../proto/blog_pb");
 
 function blogToDocument(blog) {
@@ -36,11 +37,11 @@ function documentToBlog(doc) {
     return new Blog()
         .setId(doc._id.toString())
         .setAuthorId(doc.author_id)
-        .setTitle(doc.title)
         .setContent(doc.content)
+        .setTitle(doc.title)
 };
 
-function checkObjectId(id, callback) {
+function checkOID(id, callback) {
     try {
         return new ObjectId(id);
     } catch (err) {
@@ -64,10 +65,40 @@ exports.createBlog = async(call, callback) => {
 };
 
 exports.readBlog = async(call, callback) => {
-    const oid = checkObjectId(call.request.getId(), callback);
+    const oid = checkOID(call.request.getId(), callback);
 
     await collection.findOne({ _id: oid }).then((res) => {
         checkNotFound(res, callback);
         callback(null, documentToBlog(res));
+    }).catch((err) => internal(err, callback));
+};
+
+exports.updateBlog = async(call, callback) => {
+    const oid = checkOID(call.request.getId(), callback);
+
+    await collection.updateOne({ _id: oid }, { $set: blogToDocument(call.request) }, ).then((res) => {
+        checkNotFound(res, callback);
+        checkNotAcknowledged(res, callback);
+        callback(null, new Empty());
+    }).catch((err) => internal(err, callback));
+};
+
+exports.listBlogs = async(call, _) =>
+    await collection.find()
+    .map((doc) => documentToBlog(doc))
+    .forEach((blog) => call.write(blog))
+    .then(() => call.end())
+    .catch((err) => call.destroy({
+        code: grpc.status.INTERNAL,
+        message: 'A message',
+    }));
+
+exports.deleteBlog = async(call, callback) => {
+    const oid = checkOID(call.request.getId(), callback);
+
+    await collection.deleteOne({ _id: oid }).then((res) => {
+        checkNotFound(res, callback);
+        checkNotAcknowledged(res, callback);
+        callback(null, new Empty());
     }).catch((err) => internal(err, callback));
 };

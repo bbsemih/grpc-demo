@@ -62,7 +62,8 @@ function main() {
     //doWeather(client);
     //doWeatherManyTimes(client)
     //doWeatherExact(client);
-    doWeatherMutual(client);
+    doWeatherMutual(client); //bi-directional streaming
+
     client.close();
 }
 main();
