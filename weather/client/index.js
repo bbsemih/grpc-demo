@@ -40,13 +40,29 @@ function doWeatherExact(client) {
     call.end();
 };
 
+function doWeatherMutual(client) {
+    console.log("doWeatherMutual was invoked!");
+    const cities = ["Istanbul", "San Jose", "Paris"];
+    const call = client.weatherMutual();
+
+    call.on("data", (res) => {
+        console.log(`Result: ${res.getResult()}`);
+    });
+
+    cities.map((city) => {
+        return new WeatherRequest().setCity(city)
+    }).forEach((req) => call.write(req));
+    call.end();
+};
+
 function main() {
     const creds = grpc.ChannelCredentials.createInsecure();
     const client = new WeatherServiceClient("localhost:50051", creds);
 
     //doWeather(client);
     //doWeatherManyTimes(client)
-    doWeatherExact(client);
+    //doWeatherExact(client);
+    doWeatherMutual(client);
     client.close();
 }
 main();
