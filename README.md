@@ -10,6 +10,7 @@
 The projects in this repository use the following technologies:
 
 * Node.js
+* Golang
 * gRPC
 * Protocol Buffers
 * Express
