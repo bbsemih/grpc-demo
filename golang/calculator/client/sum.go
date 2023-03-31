@@ -11,7 +11,7 @@ func doSum(c pb.CalculatorServiceClient) {
 	log.Println("doSum was invoked!")
 	res, err := c.Sum(context.Background(), &pb.SumRequest{
 		FirstNumber:  10,
-		SecondNumber: 20,
+		SecondNumber: 25,
 	})
 
 	if err != nil {
