@@ -4,6 +4,7 @@ package calculator;
 
 option go_package = "github.com/bbsemih/microservices/calculator/proto";
 
+//Sum
 message SumRequest {
     int32 first_number = 1;
     int32 second_number = 2;
@@ -13,6 +14,16 @@ message SumResponse {
     int32 result = 1;
 }
 
+//Primes
+message PrimesRequest {
+    int64 number = 1;
+}
+
+message PrimesResponse {
+    int64 result = 1;
+}
+
 service CalculatorService {
     rpc Sum(SumRequest) returns (SumResponse);
+    rpc Primes(PrimesRequest) returns (stream PrimesResponse);
 }
