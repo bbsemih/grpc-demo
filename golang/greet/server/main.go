@@ -11,21 +11,21 @@ import (
 var addr string = "0.0.0.0:50051"
 
 type Server struct {
-	pb.GreetServiceServer
+  pb.GreetServiceServer
 }
 
 func main() {
-	lis, err := net.Listen("tcp", addr)
+  lis,err := net.Listen("tcp",addr)
+  
+  if err != nil {
+    log.Fatalf("Failed to listen on: %v",err)
+  }
+  log.Printf("Listening on %s\n",addr)
 
-	if err != nil {
-		log.Fatalf("Failed to listen on: %v", err)
-	}
-	log.Printf("Listening on %s\n", addr)
+  s := grpc.NewServer()
+  pb.RegisterGreetServiceServer(s, &Server{})
 
-	s := grpc.NewServer()
-	pb.RegisterGreetServiceServer(s, &Server{})
-
-	if err := s.Serve(lis); err != nil {
-		log.Fatalf("Failed to serve: %v", err)
-	}
+  if err := s.Serve(lis); err != nil {
+    log.Fatalf("Failed to serve: %v",err)
+  }
 }
