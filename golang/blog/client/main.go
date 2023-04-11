@@ -23,4 +23,7 @@ func main() {
 
 	id := createBlog(c)
 	readBlog(c, id)
+	readBlog(c, "yokboylebirID")
+	updateBlog(c, id)
+	listBlog(c)
 }
